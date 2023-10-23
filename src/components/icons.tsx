@@ -32,7 +32,19 @@ import {
 export type Icon = LucideProps
 
 export const Icons:any = {
-  logo: Command,
+  logo: ({ ...props }: LucideProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" { ...props }>
+    <g fill="currentColor" stroke-width="1.10933">
+      <g fill="currentColor" stroke-width="1.10933">
+        <path d="M-10.287 47.287h-4.362l-9.774-19.5h4.473zm-3.764-1.98h1.201l-7.753-15.644h-1.289z" fill="currentColor" stroke-width="1.10933" transform="matrix(.99036 0 0 .82051 29.188 -18.8)"/>
+        <path d="M-21.157 47.287h-3.266v-19.5l3.267 4.613z" fill="currentColor" stroke-width="1.10933" transform="matrix(.99036 0 0 .82051 29.188 -18.8)"/>
+      </g>
+      <g fill="currentColor" stroke-width="1.10933">
+        <path d="M-21.157 47.287h-3.266v-19.5l3.267 4.613z" fill="currentColor" stroke-width="1.10933" transform="matrix(-.99036 0 0 -.82051 -5.188 42.8)"/>
+      </g>
+    </g>
+  </svg>
+  ),
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
