@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import Link from "next/link";
 import { Icons } from "~/components/icons";
 import type { Locale } from "~/i18n-config";
@@ -12,7 +13,10 @@ type Props = {
 };
 
 export default async function DashBoard({ params: { locale } }: Props) {
-  const session = await getServerAuthSession();
+  const headersList = headers();
+  const user_agent = headersList.get("user-agent");
+  const user_ip = headersList.get("x-forwarded-for");
+  const session = await getServerAuthSession(user_agent, user_ip);
   const d = await getDictionary(locale);
 
   return (

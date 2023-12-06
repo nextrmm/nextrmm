@@ -66,5 +66,8 @@
       "successToast": "Location created successfully",
       "errorToast": "Oops, Error creating location"
     }
+  },
+  "login-session": {
+    "menu": "Yours Devices"
   }
 }
