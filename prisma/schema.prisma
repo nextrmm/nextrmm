@@ -34,11 +34,12 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String        @id @default(cuid())
+  sessionToken  String        @unique
+  userId        String
+  expires       DateTime
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  loginSessions LoginSession?
 }
 
 model User {
@@ -51,6 +52,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   organizations Organization[]
+  LoginSession  LoginSession[]
 }
 
 model VerificationToken {
@@ -61,7 +63,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-//Software manage
+// Software manage
 model Software {
   id      String   @id @default(uuid())
   type    String
@@ -72,7 +74,7 @@ model Software {
   @@index([type])
 }
 
-//System update
+// System update
 model SystemUpdate {
   id        String   @id @default(uuid())
   device    Device   @relation(fields: [deviceId], references: [id])
@@ -92,7 +94,7 @@ model SystemUpdatePolicy {
   updatedAt DateTime @updatedAt
 }
 
-//Agent
+// Agent
 model Agent {
   id         String   @id @default(uuid())
   version    String
@@ -108,7 +110,7 @@ model Agent {
   @@index([os, autoUpdate])
 }
 
-//Device manage
+// Device manage
 enum Connection {
   Online
   Offline
@@ -181,7 +183,7 @@ model Organization {
   @@index([name])
 }
 
-//Task
+// Task
 model Task {
   id         String   @id @default(uuid())
   name       String
@@ -197,7 +199,7 @@ model Task {
   @@index([content(ops: JsonbPathOps)], type: Gin)
 }
 
-//Alert
+// Alert
 model Alert {
   id         String   @id @default(uuid())
   name       String
@@ -232,7 +234,7 @@ model Script {
   @@index([name, type, codeHash, isHiddenRunning, isTemplate])
 }
 
-//Report
+// Report
 enum ReportType {
   Markdown
   Html
@@ -250,7 +252,7 @@ model Report {
   @@index([name, type, isTemplate])
 }
 
-//Log
+// Log
 enum LogType {
   Task
   UserAction
@@ -279,4 +281,21 @@ model Settings {
   updatedAt        DateTime @updatedAt
 
   @@index([aiSettings(ops: JsonbPathOps), announceSettings(ops: JsonbPathOps)], type: Gin)
+}
+
+model LoginSession {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId String   @unique
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ip        String
+  country   String
+  region    String
+  city      String
+  os        String
+  browser   String
+  userAgent String
 }
