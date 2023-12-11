@@ -17,7 +17,20 @@ export default async function Devices() {
       },
     },
   });
-  let devices = [];
+  let devices: {
+    id: string;
+    userId: string;
+    sessionId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    ip: string;
+    country: string;
+    region: string;
+    city: string;
+    os: string;
+    browser: string;
+    userAgent: string;
+  }[] = [];
   for (let i = 0; i < user_sessions.length; i++) {
     const login_session = await db.loginSession.findUnique({
       where: {
@@ -38,7 +51,20 @@ export default async function Devices() {
   let devices_list: any[][] = [];
 
   device_name_list.forEach((device_name) => {
-    let device = devices.filter((device) => {
+    let device: {
+      id: string;
+      userId: string;
+      sessionId: string;
+      createdAt: Date;
+      updatedAt: Date;
+      ip: string;
+      country: string;
+      region: string;
+      city: string;
+      os: string;
+      browser: string;
+      userAgent: string;
+    }[] = devices.filter((device) => {
       return device.os === device_name;
     });
     devices_list.push(device);

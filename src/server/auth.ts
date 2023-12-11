@@ -193,6 +193,7 @@ export function authOptions(
                   os: os,
                   browser: browser,
                 }),
+                text: "",
               });
             }
           } catch (e) {

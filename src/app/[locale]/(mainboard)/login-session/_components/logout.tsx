@@ -6,7 +6,7 @@ interface Props {
   sessionId: string;
 }
 function Logout({ sessionId }: Props) {
-  const delete_devices = async (sessionId) => {
+  const delete_devices = async (sessionId: string) => {
     const response = await fetch("/api/device_logout", {
       method: "POST",
       headers: {

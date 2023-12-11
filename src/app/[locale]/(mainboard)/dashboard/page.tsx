@@ -16,7 +16,7 @@ export default async function DashBoard({ params: { locale } }: Props) {
   const headersList = headers();
   const user_agent = headersList.get("user-agent");
   const user_ip = headersList.get("x-forwarded-for");
-  const session = await getServerAuthSession(user_agent, user_ip);
+  const session = await getServerAuthSession(user_agent ?? "", user_ip ?? "");
   const d = await getDictionary(locale);
 
   return (
