@@ -25,20 +25,17 @@ export const metadata = {
   description: siteConfig.description,
   keywords: ["Next.js", "NextRMM", "RMM"],
   creator: "NextRMM",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  openGraph: {
-    type: "website",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
   },
+};
+
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 };
 
 export async function generateStaticParams() {
