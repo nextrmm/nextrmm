@@ -14,15 +14,15 @@ export const SignUpTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   url,
   d,
 }) => {
-  return (
+  return `
     <div>
-      <h1>{d["get-started"]}</h1>
+      <h1>${d["get-started"]}</h1>
       <p>
-        {d["sign-up"]}{" "}
+        ${d["sign-up"]}${" "}
         <span>
-          <a href={url}>{host}</a>
+          <a href=${url}>${host}</a>
         </span>
-      </p>
+        </p>
     </div>
-  );
+  `;
 };

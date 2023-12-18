@@ -10,6 +10,7 @@ import { Icons } from "~/components/icons";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { useToast } from "~/components/ui/use-toast";
 import { cn } from "~/lib/utils";
 import { authDataSchema } from "~/lib/validation/auth";
 import { AuthFormType } from "~/types/index.d";
@@ -36,6 +37,7 @@ export function AuthForm({
 }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const searchParams = useSearchParams();
+  const { toast } = useToast();
 
   const {
     register,
@@ -48,21 +50,26 @@ export function AuthForm({
 
   async function onSubmit(data: AuthFormData) {
     setIsLoading(true);
-
     const result = await signIn("email", {
-      email: `${data.email}+${locale}`,
+      email: `${data.email}`,
       redirect: false,
       callbackUrl: searchParams.get("from") || "/",
     });
-
     setIsLoading(false);
 
     if (result?.error) {
-      console.info("Sign in failed.", result?.error);
-      return;
+      toast({
+        variant: "destructive",
+        title: "Sign in failed",
+        description: "Please wait a minute and try again.",
+      });
+    } else {
+      toast({
+        title: "Email has been sent",
+        description: "Please check your Email",
+      });
     }
-
-    console.info("Please check your email.");
+    return;
   }
 
   return (
@@ -114,12 +121,7 @@ export function AuthForm({
           disabled={isLoading}
           onClick={() => signIn("google", { callbackUrl: "/" })}
         >
-          {isLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.google className="mr-2 h-4 w-4" />
-          )}{" "}
-          Google
+          <Icons.google className="mr-2 h-4 w-4" /> Google
         </Button>
         <Button
           variant="outline"
@@ -127,12 +129,7 @@ export function AuthForm({
           disabled={isLoading}
           onClick={() => signIn("github", { callbackUrl: "/" })}
         >
-          {isLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.gitHub className="mr-2 h-4 w-4" />
-          )}{" "}
-          GitHub
+          <Icons.gitHub className="mr-2 h-4 w-4" /> GitHub
         </Button>
       </div>
     </div>
