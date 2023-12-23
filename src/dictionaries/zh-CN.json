@@ -1,0 +1,85 @@
+{
+  "index": {},
+  "auth-layout": {
+    "document": "文档",
+    "click-continue": "继续操作即表示您同意 NextRMM 的",
+    "term-service": "服务条款",
+    "and": "和",
+    "privacy-policy": "隐私政策"
+  },
+  "login": {
+    "welcome-back": "欢迎回来",
+    "enter-email": "输入您的电子邮件以登录您的账户",
+    "no-account": "还没有账户？立即注册",
+    "sign-in": "登录"
+  },
+  "register": {
+    "sign-in": "已有账户？立即登录",
+    "create-account": "创建新账户",
+    "enter-email": "输入您的电子邮件以创建账户"
+  },
+  "auth-form": {
+    "email": "电子邮件",
+    "continue": "或使用以下方式登录",
+    "sign-in": "使用电子邮件登录",
+    "sign-up": "使用电子邮件注册"
+  },
+  "sign-in-email-template": {
+    "welcome-back": "欢迎回来！",
+    "sign-in": "登录到"
+  },
+  "sign-up-email-template": {
+    "get-started": "开始使用吧！",
+    "sign-up": "注册到"
+  },
+  "dashboard": {
+    "menu": {
+      "getting-started": "入门指南",
+      "organizations": "组织"
+    },
+    "community": {
+      "community": "社区",
+      "documentation": "文档",
+      "news": "新闻"
+    },
+    "create-organization": {
+      "title": "创建组织",
+      "name": "组织名称",
+      "description": "添加新组织",
+      "create": "创建",
+      "wait": "创建中...",
+      "successToast": "组织创建成功",
+      "errorToast": "哎呀，创建组织时出错"
+    },
+    "create-location": {
+      "title": "创建位置",
+      "organization-name": "组织名称",
+      "organization-select": "选择组织...",
+      "organization-input-placeholder": "搜索组织...",
+      "organization-empty-placeholder": "未找到组织。",
+      "organization-fetch-loading": "加载中...",
+      "organization-fetch-error": "哎呀，服务器出了点问题。",
+      "location-name": "位置名称",
+      "description": "添加新位置",
+      "create": "创建",
+      "wait": "创建中...",
+      "successToast": "位置创建成功",
+      "errorToast": "哎呀，创建位置时出错"
+    },
+    "add-device": {
+      "title": "添加设备",
+      "description": "添加新设备",
+      "name": "设备ID",
+      "successToast": "设备添加成功",
+      "errorToast": "哎呀，添加设备时出错",
+      "location-name": "位置名称",
+      "location-select": "选择位置...",
+      "location-input-placeholder": "搜索位置...",
+      "location-empty-placeholder": "未找到位置。",
+      "location-fetch-loading": "加载中...",
+      "location-fetch-error": "哎呀，服务器出了点问题。",
+      "add": "添加",
+      "wait": "添加中..."
+    }
+  }
+}
