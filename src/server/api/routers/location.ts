@@ -16,6 +16,11 @@ export const locationRouter = createTRPCRouter({
       });
     }),
 
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    const allLocations = await ctx.db.location.findMany();
+    return allLocations;
+  }),
+
   create: protectedProcedure
     .input(
       z.object({
