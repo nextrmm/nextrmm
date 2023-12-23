@@ -7,7 +7,7 @@ import {
 import EmailProvider from "next-auth/providers/email";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { Resend } from "resend";
+import { createTransport } from "nodemailer";
 import { SignInTemplate } from "~/components/email-template/sign-in";
 import { SignUpTemplate } from "~/components/email-template/sign-up";
 import { env } from "~/env.mjs";
@@ -15,8 +15,6 @@ import type { Locale } from "~/i18n-config";
 import { getDictionary } from "~/lib/dictionary";
 import { authDataSchema } from "~/lib/validation/auth";
 import { db } from "~/server/db";
-
-const resend = new Resend("re_T3T2Nw76_LrnEcTmQxUC3oXfdAJ92WQmM");
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -74,49 +72,41 @@ export const authOptions: NextAuthOptions = {
       },
       from: env.EMAIL_FROM,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        try {
-          const { host } = new URL(url);
-          const splits = identifier.split("+");
-          const email = splits[0];
-          const locale = splits[1] ?? "en";
+        const { host } = new URL(url);
+        const email = identifier;
+        const locale = "en";
 
-          // Email provider lowercase all the letters so we need to transform it back for locales like "es-ES"
-          const transformedLocale = locale
-            .split("-")
-            .map((part, index) => (index > 0 ? part.toUpperCase() : part))
-            .join("-");
+        const isEmailValid = authDataSchema.safeParse({ email });
 
-          const isEmailValid = authDataSchema.safeParse({ email });
-
-          if (!isEmailValid.success) {
-            throw new Error("Invalid Email.");
-          }
-
-          const user = await db.user.findUnique({
-            where: {
-              email: isEmailValid.data.email,
-            },
-            select: {
-              emailVerified: true,
-            },
-          });
-
-          const dictionary = await getDictionary(transformedLocale as Locale);
-          const signInDictionary = dictionary["sign-in-email-template"];
-          const signUpDictionary = dictionary["sign-up-email-template"];
-
-          await resend.emails.send({
-            from: provider.from,
-            to: isEmailValid.data.email,
-            subject: `Sign in to ${host}.`,
-            text: `Sign in to ${host}\n${url}\n\n`,
-            react: user
-              ? SignInTemplate({ host, url, d: signInDictionary })
-              : SignUpTemplate({ host, url, d: signUpDictionary }),
-          });
-        } catch (error) {
-          throw new Error(`Email could not be sent.`);
+        if (!isEmailValid.success) {
+          throw new Error("Invalid Email.");
         }
+
+        const user = await db.user.findUnique({
+          where: {
+            email: isEmailValid.data.email,
+          },
+          select: {
+            emailVerified: true,
+          },
+        });
+
+        const dictionary = await getDictionary(locale as Locale);
+        const signInDictionary = dictionary["sign-in-email-template"];
+        const signUpDictionary = dictionary["sign-up-email-template"];
+
+        const htmlContent = user
+          ? SignInTemplate({ host, url, d: signInDictionary })
+          : SignUpTemplate({ host, url, d: signUpDictionary });
+
+        const transport = createTransport(provider.server);
+        const result = await transport.sendMail({
+          from: provider.from,
+          to: isEmailValid.data.email,
+          subject: `Sign in to ${host}`,
+          text: `Sign in to ${host}\n${url}\n\n`,
+          html: htmlContent as string,
+        });
       },
     }),
     GitHubProvider({

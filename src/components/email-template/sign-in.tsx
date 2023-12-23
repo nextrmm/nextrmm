@@ -14,15 +14,15 @@ export const SignInTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   url,
   d,
 }) => {
-  return (
+  return `
     <div>
-      <h1>{d["welcome-back"]}</h1>
+      <h1>${d["welcome-back"]}</h1>
       <p>
-        {d["sign-in"]}{" "}
+        ${d["sign-in"]}${" "}
         <span>
-          <a href={url}>{host}</a>
+          <a href=${url}>${host}</a>
         </span>
-      </p>
+        </p>
     </div>
-  );
+  `;
 };
