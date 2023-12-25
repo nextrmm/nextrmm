@@ -13,17 +13,13 @@ import { Label } from "~/components/ui/label";
 import { useToast } from "~/components/ui/use-toast";
 import { cn } from "~/lib/utils";
 import { authDataSchema } from "~/lib/validation/auth";
+import { I18nDict } from "~/types";
 import { AuthFormType } from "~/types/index.d";
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   authFormType: AuthFormType;
   locale: string;
-  d: {
-    email: string;
-    continue: string;
-    "sign-in": string;
-    "sign-up": string;
-  };
+  d: I18nDict;
 }
 
 type AuthFormData = z.infer<typeof authDataSchema>;
@@ -36,6 +32,7 @@ export function AuthForm({
   ...props
 }: AuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [lastSent, setLastSent] = React.useState<number>(0);
   const searchParams = useSearchParams();
   const { toast } = useToast();
 
@@ -49,6 +46,16 @@ export function AuthForm({
   });
 
   async function onSubmit(data: AuthFormData) {
+    const now = Date.now();
+    if (now - lastSent < 60000) {
+      toast({
+        variant: "destructive",
+        title: d["email-send-frquent-title"],
+        description: d["email-send-frquent-description"],
+      });
+      return;
+    }
+
     setIsLoading(true);
     const result = await signIn("email", {
       email: `${data.email}`,
@@ -60,13 +67,14 @@ export function AuthForm({
     if (result?.error) {
       toast({
         variant: "destructive",
-        title: "Sign in failed",
-        description: "Please wait a minute and try again.",
+        title: d["email-send-error-title"],
+        description: d["email-send-error-description"],
       });
     } else {
+      setLastSent(now);
       toast({
-        title: "Email has been sent",
-        description: "Please check your Email",
+        title: d["email-send-delivered-title"],
+        description: d["email-send-delivered-description"],
       });
     }
     return;

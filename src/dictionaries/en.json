@@ -20,6 +20,12 @@
   },
   "auth-form": {
     "email": "Email",
+    "email-send-error-title": "Sign in failed",
+    "email-send-error-description": "Please wait a minute and try again",
+    "email-send-delivered-title": "Email has been sent",
+    "email-send-delivered-description": "Please check your Email",
+    "email-send-frquent-title": "Too frequent requests",
+    "email-send-frquent-description": "Please wait a minute before trying again",
     "continue": "Or continue with",
     "sign-in": "Sign In with Email",
     "sign-up": "Sign Up with Email"

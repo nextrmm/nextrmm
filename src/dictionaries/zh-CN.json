@@ -20,6 +20,12 @@
   },
   "auth-form": {
     "email": "电子邮件",
+    "email-send-error-title": "登入失败",
+    "email-send-error-description": "请检查您的电子邮箱是否正确",
+    "email-send-delivered-title": "邮件已送达",
+    "email-send-delivered-description": "请注意查收",
+    "email-send-frquent-title": "请求发送过于频繁",
+    "email-send-frquent-description": "请在一分钟后尝试",
     "continue": "或使用以下方式登录",
     "sign-in": "使用电子邮件登录",
     "sign-up": "使用电子邮件注册"

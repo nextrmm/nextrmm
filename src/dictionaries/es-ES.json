@@ -20,6 +20,12 @@
   },
   "auth-form": {
     "email": "Correo Electrónico",
+    "email-send-error-title": "Sign in failed",
+    "email-send-error-description": "Please wait a minute and try again",
+    "email-send-delivered-title": "Email has been sent",
+    "email-send-delivered-description": "Please check your Email",
+    "email-send-frquent-title": "Too frequent requests",
+    "email-send-frquent-description": "Please wait a minute before trying again",
     "continue": "O continuar con",
     "sign-in": "Iniciar Sesión con Correo Electrónico",
     "sign-up": "Registrarse con Correo Electrónico"
