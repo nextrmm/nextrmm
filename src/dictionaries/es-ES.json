@@ -65,6 +65,21 @@
       "wait": "Creating...",
       "successToast": "Location created successfully",
       "errorToast": "Oops, Error creating location"
+    },
+    "add-device": {
+      "title": "Add device",
+      "description": "Add a new device",
+      "name": "Device ID",
+      "successToast": "Machine added successfully",
+      "errorToast": "Oops, Error on adding device",
+      "location-name": "Location Name",
+      "location-select": "Select location...",
+      "location-input-placeholder": "Search location...",
+      "location-empty-placeholder": "No location found.",
+      "location-fetch-loading": "Loading...",
+      "location-fetch-error": "Oops, there are something wrong with server.",
+      "add": "Add",
+      "wait": "Adding..."
     }
   }
 }

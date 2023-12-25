@@ -3,6 +3,7 @@ import { Icons } from "~/components/icons";
 import type { Locale } from "~/i18n-config";
 import { getDictionary } from "~/lib/dictionary";
 import { getServerAuthSession } from "~/server/auth";
+import { AddDeviceDialog } from "./_components/add-device-dialog";
 import { CreateLocationDialog } from "./_components/create-location-dialog";
 import { CreateOrganizationDialog } from "./_components/create-organization-dialog";
 import { DocumentsStartupSection } from "./_components/documents-startup-section";
@@ -25,6 +26,10 @@ export default async function DashBoard({ params: { locale } }: Props) {
         />
         <CreateLocationDialog
           dictionary={d.dashboard["create-location"]}
+          id={session!.user.id}
+        />
+        <AddDeviceDialog
+          dictionary={d.dashboard["add-device"]}
           id={session!.user.id}
         />
       </div>
