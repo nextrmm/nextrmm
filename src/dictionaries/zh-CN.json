@@ -9,14 +9,13 @@
   },
   "login": {
     "welcome-back": "欢迎回来",
-    "enter-email": "输入您的电子邮件以登录您的账户",
+    "sign-in-account": "登录您的账户",
     "no-account": "还没有账户？立即注册",
     "sign-in": "登录"
   },
   "register": {
     "sign-in": "已有账户？立即登录",
-    "create-account": "创建新账户",
-    "enter-email": "输入您的电子邮件以创建账户"
+    "create-account": "创建新账户"
   },
   "auth-form": {
     "email": "电子邮件",
@@ -29,6 +28,25 @@
     "continue": "或使用以下方式登录",
     "sign-in": "使用电子邮件登录",
     "sign-up": "使用电子邮件注册"
+  },
+  "sign-in-form": {
+    "sign-in-success-title": "登录成功！",
+    "sign-in-success-description": "主面板将在3秒内跳转",
+    "sign-in-fail-title": "登录失败",
+    "sign-in-fail-description": "请检查您的密码是否正确",
+    "email": "电子邮件",
+    "password": "密码",
+    "sign-in": "登录",
+    "continue": "或使用以下方式登录"
+  },
+  "sign-up-form": {
+    "sign-up-success-title": "注册成功！",
+    "sign-up-success-description": "控制面板将在3秒内跳转",
+    "sign-up-fail-title": "注册失败",
+    "email": "电子邮件",
+    "password": "密码",
+    "sign-up": "注册",
+    "continue": "或使用以下方式登录"
   },
   "sign-in-email-template": {
     "welcome-back": "欢迎回来！",

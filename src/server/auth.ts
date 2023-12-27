@@ -1,9 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcrypt";
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -61,6 +63,31 @@ export const authOptions: NextAuthOptions = {
     //   clientId: env.DISCORD_CLIENT_ID,
     //   clientSecret: env.DISCORD_CLIENT_SECRET,
     // }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        const user = await db.user.findUnique({
+          where: {
+            email: credentials!.email,
+          },
+        });
+        console.log(user);
+        if (user && user.hashedPassword && credentials) {
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            user.hashedPassword,
+          );
+          if (isValid) {
+            return user;
+          }
+        }
+        return null;
+      },
+    }),
     EmailProvider({
       server: {
         host: env.EMAIL_SERVER_HOST,

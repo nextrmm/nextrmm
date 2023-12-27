@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { AuthForm } from "~/components/auth-form";
+import { SignInForm } from "~/components/signin-form";
 import type { Locale } from "~/i18n-config";
 import { getDictionary } from "~/lib/dictionary";
-import { AuthFormType } from "~/types/index.d";
 
 type Props = {
   params: { locale: Locale };
@@ -21,14 +20,10 @@ export default async function LogInPage({ params: { locale } }: Props) {
                 {d.login["welcome-back"]}
               </h1>
               <p className="text-sm text-muted-foreground">
-                {d.login["enter-email"]}
+                {d.login["sign-in-account"]}
               </p>
             </div>
-            <AuthForm
-              authFormType={AuthFormType.SignIn}
-              locale={locale}
-              d={d["auth-form"]}
-            />
+            <SignInForm d={d["sign-in-form"]} />
             <p className="px-8 text-center text-sm text-muted-foreground">
               <Link
                 href="/register"

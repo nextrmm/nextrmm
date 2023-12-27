@@ -42,15 +42,16 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  isAdmin       Boolean        @default(false)
-  accounts      Account[]
-  sessions      Session[]
-  organizations Organization[]
+  id             String         @id @default(cuid())
+  name           String?
+  email          String?        @unique
+  emailVerified  DateTime?
+  image          String?
+  isAdmin        Boolean        @default(false)
+  hashedPassword String?
+  accounts       Account[]
+  sessions       Session[]
+  organizations  Organization[]
 }
 
 model VerificationToken {

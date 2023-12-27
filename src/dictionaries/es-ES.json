@@ -9,14 +9,13 @@
   },
   "login": {
     "welcome-back": "Bienvenido de nuevo",
-    "enter-email": "Introduce tu correo electrónico para iniciar sesión en tu cuenta",
+    "sign-in-account": "Introduce tu correo electrónico para iniciar sesión en tu cuenta",
     "no-account": "¿No tienes una cuenta? Regístrate",
     "sign-in": "Iniciar Sesión"
   },
   "register": {
     "sign-in": "¿Ya tienes una cuenta? Iniciar sesión ahora",
-    "create-account": "Crear una cuenta nueva",
-    "enter-email": "Introduce tu correo electrónico a continuación para crear tu cuenta"
+    "create-account": "Crear una cuenta nueva"
   },
   "auth-form": {
     "email": "Correo Electrónico",
@@ -29,6 +28,24 @@
     "continue": "O continuar con",
     "sign-in": "Iniciar Sesión con Correo Electrónico",
     "sign-up": "Registrarse con Correo Electrónico"
+  },
+  "sign-in-form": {
+    "sign-in-success-title": "Sign in success!",
+    "sign-in-fail-title": "Sign in failed",
+    "sign-in-fail-description": "Please check your password",
+    "email": "Email",
+    "password": "Password",
+    "sign-in": "Sign In",
+    "continue": "Or continue with"
+  },
+  "sign-up-form": {
+    "sign-up-success-title": "Sign up success!",
+    "sign-up-success-description": "The dashboard will jump in 3s",
+    "sign-up-fail-title": "Sign up failed",
+    "email": "Email",
+    "password": "Password",
+    "sign-up": "Sign Up",
+    "continue": "Or continue with"
   },
   "sign-in-email-template": {
     "welcome-back": "¡Bienvenido de nuevo!",

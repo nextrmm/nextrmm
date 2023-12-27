@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AuthForm } from "~/components/auth-form";
+import { SignUpForm } from "~/components/signup-form";
 import type { Locale } from "~/i18n-config";
 import { getDictionary } from "~/lib/dictionary";
 import { AuthFormType } from "~/types/index.d";
@@ -20,15 +20,8 @@ export default async function RegisterPage({ params: { locale } }: Props) {
               <h1 className="text-2xl font-semibold tracking-tight">
                 {d.register["create-account"]}
               </h1>
-              <p className="text-sm text-muted-foreground">
-                {d.register["enter-email"]}
-              </p>
             </div>
-            <AuthForm
-              authFormType={AuthFormType.Register}
-              locale={locale}
-              d={d["auth-form"]}
-            />
+            <SignUpForm d={d["sign-up-form"]} />
             <p className="px-8 text-center text-sm text-muted-foreground">
               <Link
                 href="/login"
