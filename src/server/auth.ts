@@ -26,12 +26,11 @@ import { db } from "~/server/db";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-       // ...other properties
+      // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
     currentSession: TSession;
@@ -114,42 +113,43 @@ export const authOptions: NextAuthOptions = {
               where: {
                 email: session.user.email,
               },
-              select: {
-                emailVerified: true,
+            });
+
+            const htmlContent = NewLocationTemplate({
+              username: session.user.name,
+              account: session.user.email,
+              time: new Date().toLocaleString(),
+              ip: userIp,
+              city: city,
+              country: country,
+              os: os || "other",
+              browser: browser || "other",
+            });
+
+            let transport = createTransport({
+              host: env.EMAIL_SERVER_HOST,
+              port: 1025,
+              auth: {
+                user: env.EMAIL_SERVER_USER,
+                pass: env.EMAIL_SERVER_PASSWORD,
               },
             });
-  
-            const htmlContent =  NewLocationTemplate({
-                    username: session.user.name,
-                    account: session.user.email,
-                    time: new Date().toLocaleString(),
-                    ip: userIp,
-                    city: city,
-                    country: country,
-                    os: os || "other",
-                    browser: browser || "other",
-                  });
-  
-          let transport = createTransport("SMTP",{
-            host: env.EMAIL_SERVER_HOST,
-            secureConnection: true,
-            port: env.EMAIL_SERVER_PORT,
-            auth: {
-                user: env.EMAIL_SERVER_USER,
-                pass: env.EMAIL_SERVER_PASSWORD
-            },
-            tls:{
-                secureProtocol: "TLSv1_method"
-            }
-        });
 
-          const result = await transport.sendMail({
-              from: env.EMAIL_FROM,
-              to: user.email,
-              subject: "Alert: Login from New Location Detected into your NextRMM account.",
-              text: `Access from a New Location Detected with IP: ${userIp}\n\n`,
-              html: htmlContent as string,
-            });
+            const emailContent =
+              htmlContent instanceof Object
+                ? JSON.stringify(htmlContent)
+                : String(htmlContent);
+
+            if (user != null && user.email != null) {
+              const result = await transport.sendMail({
+                from: env.EMAIL_FROM,
+                to: user.email,
+                subject:
+                  "Alert: Login from New Location Detected into your NextRMM account.",
+                text: `Access from a New Location Detected with IP: ${userIp}\n\n`,
+                html: emailContent,
+              });
+            }
           }
         }
 
@@ -226,41 +226,41 @@ export const authOptions: NextAuthOptions = {
       },
       from: env.EMAIL_FROM,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-          const { host } = new URL(url);
-          const email = identifier;
-          const locale = "en";
+        const { host } = new URL(url);
+        const email = identifier;
+        const locale = "en";
 
-          const isEmailValid = authDataSchema.safeParse({ email });
+        const isEmailValid = authDataSchema.safeParse({ email });
 
-          if (!isEmailValid.success) {
-            throw new Error("Invalid Email.");
-          }
+        if (!isEmailValid.success) {
+          throw new Error("Invalid Email.");
+        }
 
-          const user = await db.user.findUnique({
-            where: {
-              email: isEmailValid.data.email,
-            },
-            select: {
-              emailVerified: true,
-            },
-          });
+        const user = await db.user.findUnique({
+          where: {
+            email: isEmailValid.data.email,
+          },
+          select: {
+            emailVerified: true,
+          },
+        });
 
-          const dictionary = await getDictionary(locale as Locale);
-          const signInDictionary = dictionary["sign-in-email-template"];
-          const signUpDictionary = dictionary["sign-up-email-template"];
+        const dictionary = await getDictionary(locale as Locale);
+        const signInDictionary = dictionary["sign-in-email-template"];
+        const signUpDictionary = dictionary["sign-up-email-template"];
 
-          const htmlContent = user
+        const htmlContent = user
           ? SignInTemplate({ host, url, d: signInDictionary })
           : SignUpTemplate({ host, url, d: signUpDictionary });
 
         const transport = createTransport(provider.server);
         const result = await transport.sendMail({
-            from: provider.from,
-            to: isEmailValid.data.email,
-            subject: `Sign in to ${host}`,
-            text: `Sign in to ${host}\n${url}\n\n`,
-            html: htmlContent as string,
-          });
+          from: provider.from,
+          to: isEmailValid.data.email,
+          subject: `Sign in to ${host}`,
+          text: `Sign in to ${host}\n${url}\n\n`,
+          html: htmlContent as string,
+        });
       },
     }),
     GitHubProvider({
