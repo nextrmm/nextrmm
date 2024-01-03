@@ -48,6 +48,10 @@ export type ControlBoardConfig = {
   sidebarDownNav: SideNavPopoverItem[];
 };
 
+export type SettingsControlBoardConfig = {
+  settingsSidebarNav: SideNavItem[];
+}
+
 export type DashboardMenuItem = {
   title: string;
   href: string;
