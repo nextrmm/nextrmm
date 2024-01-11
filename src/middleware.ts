@@ -36,6 +36,16 @@ export function middleware(request: NextRequest) {
   )
     return;
 
+  const response = NextResponse.next();
+  const { nextUrl: url, geo } = request;
+  const country = geo?.country || "US";
+  const city = geo?.city || "San Francisco";
+
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("city", city);
+  requestHeaders.set("country", country);
+
+
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) =>
@@ -55,6 +65,11 @@ export function middleware(request: NextRequest) {
       ),
     );
   }
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {
